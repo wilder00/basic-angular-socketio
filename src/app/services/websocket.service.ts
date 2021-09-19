@@ -18,7 +18,7 @@ export class WebsocketService {
   //[08] creamos las funciones que escucharán los eventos de conectado y desconectado
   checkStatus(){
     this.socket.on('connect', ()=>{
-      console.log('Conectado al servidor');
+      console.log('---> Conectado al servidor');
       this.socketStatus = true;
     })
     
@@ -26,5 +26,22 @@ export class WebsocketService {
       console.log('desconectado del servidor');
       this.socketStatus = false;
     })
+  }
+
+
+  /**
+   * ### Emitir un Evento
+   * 
+   * @param event - el nombre del evento
+   * @param payload - la información que quiero enviar
+   * @param callback - la función que se quiere realizar después de que termine se ejecutar este trabajo evento
+   */
+  emit( event:string, payload?:any, callback?:Function ){
+    this.socket.emit(event, payload, callback)
+  }
+
+
+  listen(event: string ){
+    return this.socket.fromEvent(event);
   }
 }
