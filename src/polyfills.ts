@@ -63,3 +63,7 @@ import 'zone.js';  // Included with Angular CLI.
 /***************************************************************************************************
  * APPLICATION IMPORTS
  */
+
+// [06] segun el curso, se necesitaba algregar algo en el polyfills que estaba en la documentación, pero
+// ahota ya no está, pero por si acaso lo dejo aquí
+//(window as any).global = window;

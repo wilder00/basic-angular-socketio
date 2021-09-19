@@ -1,3 +1,13 @@
+Acciones
+--
+para intalar socketio cliente para angular [enlace](https://www.npmjs.com/package/ngx-socket-io)
+```
+npm i ngx-socket-io
+```
+
+
+# Generado
+---
 # Basico
 
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 12.0.2.
