@@ -44,4 +44,10 @@ export class WebsocketService {
   listen(event: string ){
     return this.socket.fromEvent(event);
   }
+
+  loginWS( nombre: string ){
+    this.emit('configurar-usuario',{ nombre }, (resp:any)=>{
+      console.log(resp);
+    })
+  }
 }
