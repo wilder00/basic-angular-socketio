@@ -10,7 +10,7 @@ export class ChatService {
     public wsService: WebsocketService
   ) { }
 
-  sendMessage(mensaje: string){
+  sendMessage(mensaje: string) {
     const payload = {
       de: this.wsService.getUsuario().nombre,
       cuerpo: mensaje,
@@ -18,13 +18,16 @@ export class ChatService {
     this.wsService.emit('mensaje', payload)
   }
 
-  getMessages(){
+  getMessages() {
     return this.wsService.listen('mensaje-nuevo')
   }
-  getPrivateMessages(){
+  getPrivateMessages() {
     return this.wsService.listen('mensaje-privado')
   }
-  getUsuariosActivos(){
+  getUsuariosActivos() {
     return this.wsService.listen('usuarios-activos');
+  }
+  emitirUsuariosActivos() {
+    this.wsService.emit('obtener-usuarios')
   }
 }
