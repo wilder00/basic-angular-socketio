@@ -11,6 +11,9 @@ export class ChatComponent implements OnInit, OnDestroy {
 
   texto: string = "";
   mensajesSubscription!: Subscription;
+  element!: HTMLElement;
+
+  mensajes: any[]= [];
 
 
   constructor(
@@ -20,13 +23,23 @@ export class ChatComponent implements OnInit, OnDestroy {
 
 
   ngOnInit(): void {
+    this.element = document.getElementById('chat-mensajes')!
     this.mensajesSubscription = this.chatService.getMessages().subscribe(msg=>{
       console.log(msg);
+      this.mensajes.push(msg);
+
+      setTimeout(() => {
+        this.element.scrollTop = this.element.scrollHeight
+      }, 50);
+
     })
 
   }
 
   enviar() {
+    if( this.texto.trim().length === 0){
+      return;
+    }
     this.chatService.sendMessage(this.texto)
     this.texto= '';
     
