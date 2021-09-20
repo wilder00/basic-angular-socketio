@@ -24,12 +24,12 @@ export class LoginComponent implements OnInit {
   ingresar() {
 
     this.wsService.loginWS( this.nombre )
-    /*   .then( () => {
+      .then( () => {
 
         this.router.navigateByUrl('/mensajes');
-
+        
     });
- */
+
   }
 
 

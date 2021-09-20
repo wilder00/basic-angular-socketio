@@ -1,15 +1,19 @@
 import { Injectable } from '@angular/core';
 import { Socket } from 'ngx-socket-io';
+import { Usuario } from '../classes/usuario';
 
 @Injectable({
   providedIn: 'root'
 })
 export class WebsocketService {
   public socketStatus = false;
+  public usuario!: Usuario;
+
   constructor(
     //[07] creamos una instancia del Socket, con solo declararlo ya tenemos conexion
     private socket: Socket
   ) { 
+    this.cargarStorage();
     //[09] llamamos la funcion que crea los observables para verificar estados, solo se necesita que se llame una sola vez
     this.checkStatus();
     //[10] de aquí en adelante ya es solo consumir el socket (bueno, eso creo)
@@ -26,6 +30,7 @@ export class WebsocketService {
       console.log('desconectado del servidor');
       this.socketStatus = false;
     })
+    
   }
 
 
@@ -46,8 +51,27 @@ export class WebsocketService {
   }
 
   loginWS( nombre: string ){
-    this.emit('configurar-usuario',{ nombre }, (resp:any)=>{
-      console.log(resp);
+    return new Promise((resolve, reject)=>{
+      this.emit('configurar-usuario',{ nombre }, (resp:any)=>{
+        this.usuario = new Usuario(nombre);
+        this.guardarStorage();
+        resolve(resp);
+      })
     })
+  }
+
+  getUsuario(){
+    return this.usuario;
+  }
+
+  guardarStorage(){
+    localStorage.setItem('usuario', JSON.stringify(this.usuario))
+  }
+
+  cargarStorage(){
+    if(localStorage.getItem('usuario')){
+      this.usuario = JSON.parse(localStorage.getItem('usuario')!)
+      this.loginWS(this.usuario.nombre) 
+    }
   }
 }
